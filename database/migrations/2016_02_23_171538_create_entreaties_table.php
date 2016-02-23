@@ -20,6 +20,7 @@ class CreateEntreatiesTable extends Migration
             $table->string('invoice_title');
             $table->text('invoice_description');
             $table->decimal('amount',10,2);
+            $table->boolean('invoice_paid')->default(false);
             $table->timestamps();
         });
     }
