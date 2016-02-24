@@ -6,7 +6,7 @@
     <div class="{{ ((count($entreaties) > 0) ? 'col-sm-5':'col-sm-offset-2 col-sm-8') }}">
       <div class="panel panel-default">
         <div class="panel-heading">
-          New Entreaty
+          Create New Entreaty
         </div>
 
         <div class="panel-body">
@@ -82,15 +82,17 @@
         </div>
 
         <div class="panel-body">
-          <table class="table table-striped entreaty-table">
+          <table class="table table-striped entreaty-table table-condensed table-hover">
             <thead>
             <th>Entreaty</th>
+            <th>Paid</th>
             <th>&nbsp;</th>
             </thead>
             <tbody>
               @foreach ($entreaties as $entreaty)
               <tr>
                 <td class="table-text"><div>{{ $entreaty->recipient_name }}</div></td>
+                <td class="table-text"><div>{{ ($entreaty->invoice_paid ? 'Yes' : 'No') }}</div></td>
 
                 <!-- Entreaty Delete Button -->
                 <td>

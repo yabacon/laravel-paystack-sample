@@ -4,11 +4,10 @@ namespace App\Http\Controllers;
 
 use Mail;
 use Illuminate\Http\Request;
-use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Entreaty;
 use App\Repositories\EntreatyRepository;
-use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Routing\UrlGenerator;
 
 class EntreatyController extends Controller
 {
@@ -19,6 +18,7 @@ class EntreatyController extends Controller
      * @var EntreatyRepository
      */
     protected $entreaties;
+    protected $url;
 
     /**
      * Create a new controller instance.
@@ -26,10 +26,10 @@ class EntreatyController extends Controller
      * @param  EntreatyRepository  $entreaties
      * @return void
      */
-    public function __construct(EntreatyRepository $entreaties)
+    public function __construct(EntreatyRepository $entreaties, UrlGenerator $url)
     {
         $this->middleware('auth');
-
+        $this->url = $url;
         $this->entreaties = $entreaties;
     }
 
@@ -66,7 +66,7 @@ class EntreatyController extends Controller
             'amount'              => 'required|numeric'
         ]);
 
-        $request->user()->entreaties()->create([
+        $entreaty = $request->user()->entreaties()->create([
             'recipient_name'      => $request->recipient_name,
             'recipient_email'     => $request->recipient_email,
             'invoice_title'       => $request->invoice_title,
@@ -80,9 +80,12 @@ class EntreatyController extends Controller
             'recipient_name'      => $request->recipient_name,
             'amount'              => $request->amount,
             'invoice_title'       => $request->invoice_title,
-            'invoice_description' => $request->invoice_description
+            'invoice_description' => $request->invoice_description,
+            'payment_url'         => $this->url->to('/pay/entreaty/' . $entreaty->id)
             ],
-                   function($message) use ($request) {
+                                                    function($message) use ($request) {
+            $message->from('q3@ps.eidetic.ng', 'Sample Laravel App');
+
             $message->to($request->recipient_email,
                          $request->recipient_name)->subject('An entreaty to pay!');
         });
@@ -103,7 +106,7 @@ class EntreatyController extends Controller
         return view('entreaties.single',
                     [
             'entreaty' => $entreaty,
-            'attempts' => $entreaty->attempts()
+            'attempts' => $entreaty->attempts()->get()
         ]);
     }
 

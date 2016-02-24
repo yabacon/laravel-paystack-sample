@@ -3,9 +3,8 @@
 namespace App\Http\Controllers;
 
 use MAbiola\Paystack\Paystack;
-
+//use Yabacon\Paystack;
 use Illuminate\Http\Request;
-
 use App\Http\Controllers\Controller;
 use App\Attempt;
 use App\Entreaty;
@@ -44,12 +43,12 @@ class AttemptController extends Controller
         $paystackLibObject = Paystack::make();
 
         // Inititiate transaction, amount should be in kobo
-        $getAuthorization = $paystackLibObject->startOneTimeTransaction($entreaty->amount*100,
+        $getAuthorization = $paystackLibObject->startOneTimeTransaction($entreaty->amount * 100,
                                                                         $entreaty->recipient_email);
 
         $entreaty->attempts()->create([
-            'reference'      => $getAuthorization['reference'],
-            'status'     => 'initialized',
+            'reference' => $getAuthorization['reference'],
+            'status'    => 'initialized',
         ]);
 
         return redirect($getAuthorization['authorization_url']);
@@ -67,22 +66,23 @@ class AttemptController extends Controller
 
         $this->validate($request,
                         [
-            'reference'      => 'required'
+            'trxref' => 'required'
         ]);
 
         // Need a Paystack Library object
         $paystackLibObject = Paystack::make();
 
         // Inititiate transaction, amount should be in kobo
-        $verifyTransaction = $paystackLibObject->verifyTransaction($request->reference);
+        $verifyTransaction = $paystackLibObject->verifyTransaction($request->trxref);
 
-        if($verifyTransaction){
+        if ($verifyTransaction) {
             // get attempt for reference
-            $attempt = Attempt::where('reference', $request->reference)->first();
+            $attempt = Attempt::where('reference',
+                                      $request->trxref)->first();
             // get its entreaty and update that entreaty's status to paid
-            var_dump( $attempt->entreaty());
-            $attempt->entreaty()->invoice_paid=true;
-            $attempt->entreaty()->save();
+            $entreaty = $attempt->entreaty()->get()->first();
+            $entreaty->invoice_paid = true;
+            $entreaty->save();
         }
 
         return view('welcome');
