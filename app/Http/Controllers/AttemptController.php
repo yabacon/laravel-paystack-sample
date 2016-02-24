@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use MAbiola\Paystack\Paystack;
-//use Yabacon\Paystack;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Attempt;
@@ -39,13 +38,16 @@ class AttemptController extends Controller
      */
     public function initiate(Request $request, Entreaty $entreaty)
     {
+        // only start a transaction if this entreaty is not yet paid
+        if ($entreaty->invoice_paid) {
+            return view('attempts/success');
+        }
         // Need a Paystack Library object
         $paystackLibObject = Paystack::make();
 
         // Inititiate transaction, amount should be in kobo
         $getAuthorization = $paystackLibObject->startOneTimeTransaction($entreaty->amount * 100,
                                                                         $entreaty->recipient_email);
-
         $entreaty->attempts()->create([
             'reference' => $getAuthorization['reference'],
             'status'    => 'initialized',
@@ -79,12 +81,18 @@ class AttemptController extends Controller
             // get attempt for reference
             $attempt = Attempt::where('reference',
                                       $request->trxref)->first();
+            $attempt->status = 'successful';
+            $attempt->save();
+
             // get its entreaty and update that entreaty's status to paid
             $entreaty = $attempt->entreaty()->get()->first();
             $entreaty->invoice_paid = true;
             $entreaty->save();
+            return view('attempts/success');
+        } else {
+            $attempt->status = 'failed';
+            $attempt->save();
+            return view('attempts/failed');
         }
-
-        return view('welcome');
     }
 }

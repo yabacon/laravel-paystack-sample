@@ -6,7 +6,7 @@
     <div class="{{ ((count($attempts) > 0) ? 'col-sm-5':'col-sm-offset-2 col-sm-8') }}">
       <div class="panel panel-default">
         <div class="panel-heading">
-          Entreaty created at {{ $entreaty->created_at->format('H:ia \o\n M j, Y') }}
+          Entreaty created at {{ $entreaty->created_at->format('H:ia \o\n M jS, Y') }}
         </div>
 
         <div class="panel-body">
@@ -59,7 +59,14 @@
               </div>
             </div>
 
-
+            <!-- Back to list Button -->
+            <div class="form-group">
+              <div class="col-sm-offset-3 col-sm-6">
+                <a href="/entreaties"><button type="" class="btn btn-primary">
+                  <i class="fa fa-btn fa-arrow-circle-o-left"></i>Back to List
+                  </button></a>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -74,29 +81,17 @@
         <div class="panel-body">
           <table class="table table-striped attempt-table">
             <thead>
-            <th>Attempt</th>
-            <th>&nbsp;</th>
+            <th>Reference</th>
+            <th>Status</th>
+            <th>Time</th>
             </thead>
             <tbody>
               @foreach ($attempts as $attempt)
               <tr>
-                <td class="table-text"><div>{{ $attempt->recipient_name }}</div></td>
+                <td class="table-text"><div>{{ $attempt->reference }}</div></td>
+                <td class="table-text"><div>{{ $attempt->status }}</div></td>
+                <td class="table-text"><div>{{ $attempt->created_at->format('H:ia \o\n M jS, Y') }}</div></td>
 
-                <!-- Attempt Delete Button -->
-                <td>
-                  <a href="/attempt/{{ $attempt->id }}"><button type="submit" id="view-attempt-{{ $attempt->id }}" class="btn btn-info">
-                      <i class="fa fa-btn fa-eye"></i>View
-                    </button></a>
-
-                  <form class="{{ ($attempt->invoice_paid ? 'hidden':'') }}" style="display:inline-block" action="/attempt/{{ $attempt->id }}" method="POST">
-                    {{ csrf_field() }}
-                    {{ method_field('DELETE') }}
-
-                    <button type="submit" id="delete-attempt-{{ $attempt->id }}" class="btn btn-danger">
-                      <i class="fa fa-btn fa-trash"></i>Delete
-                    </button>
-                  </form>
-                </td>
               </tr>
               @endforeach
             </tbody>
