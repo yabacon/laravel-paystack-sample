@@ -202,14 +202,6 @@
 						<td width="100%" height="5"></td>
 					</tr>
 					<!-- Spacing -->
-					@if ($unsubscribe)
-					<tr>
-						<td align="center" valign="middle" style="font-family: Helvetica, arial, sans-serif; font-size: 10px;color: #999999" st-content="preheader">
-							{{ $unsubscribe }}
-						</td>
-					</tr>
-					@endif
-					<!-- Spacing -->
 					<tr>
 						<td width="100%" height="5"></td>
 					</tr>

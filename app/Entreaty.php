@@ -12,7 +12,7 @@ class Entreaty extends Model
      *
      * @var array
      */
-    protected $fillable = [];
+    protected $fillable = ['recipient_name','recipient_email','invoice_title','invoice_description','amount'];
 
     /**
      * The table to use.

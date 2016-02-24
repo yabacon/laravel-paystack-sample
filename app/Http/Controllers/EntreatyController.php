@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Mail;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -73,9 +74,9 @@ class EntreatyController extends Controller
         ]);
 
         // Send email to recipient
-        Mail::send('emails.welcome',
+        Mail::send('emails.entreaty',
                    ['recipient_name' => '$request->recipient_name' ],
-                   function($message) {
+                   function($message) use ($request) {
             $message->from('q3@ps.eidetic.ng', 'Sample Laravel App');
 
             $message->to($request->recipient_email,
