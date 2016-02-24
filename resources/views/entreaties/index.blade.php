@@ -100,7 +100,7 @@
                       <i class="fa fa-btn fa-eye"></i>View
                     </button></a>
 
-                  <form class="{{ ($entreaty->invoice_paid ? 'hidden':'') }}" style="display:inline-block" action="/entreaty/{{ $entreaty->id }}" method="POST">
+                  <form class="{{ (($entreaty->invoice_paid || true)? 'hidden':'') }}" style="display:inline-block" action="/entreaty/{{ $entreaty->id }}" method="POST">
                     {{ csrf_field() }}
                     {{ method_field('DELETE') }}
 
