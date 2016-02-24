@@ -83,18 +83,15 @@ class EntreatyController extends Controller
             'invoice_description' => $request->invoice_description
             ],
                    function($message) use ($request) {
-            $message->from('q3@ps.eidetic.ng',
-                           'Sample Laravel App');
-
             $message->to($request->recipient_email,
-                         $request->recipient_name)->cc('ibrahim.lawal@eidetic.ng')->subject('An entreaty to pay!');
+                         $request->recipient_name)->subject('An entreaty to pay!');
         });
 
         return redirect('/entreaties');
     }
 
     /**
-     * Destroy the given entreaty.
+     * View the given entreaty.
      *
      * @param  Request  $request
      * @param  Entreaty  $entreaty
@@ -102,20 +99,11 @@ class EntreatyController extends Controller
      */
     public function view(Request $request, Entreaty $entreaty)
     {
-        try {
-            $this->authorize('view',
-                             $entreaty);
-        } catch (AuthorizationException $ae) {
-            return view('entreaties.pay',
-                        [
-                'entreaty' => $entreaty,
-                'attempts' => [ ]
-            ]);
-        }
+
         return view('entreaties.single',
                     [
             'entreaty' => $entreaty,
-            'attempts' => [ ]
+            'attempts' => $entreaty->attempts()
         ]);
     }
 

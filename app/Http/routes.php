@@ -40,16 +40,13 @@ Route::group(['middleware' => ['web' ] ],
                 'EntreatyController@store');
     Route::get('/entreaty/{entreaty}',
                'EntreatyController@view');
-    Route::get('/entreaty/{entreaty}/pay',
-               function(App\Entreaty $entreaty) {
-        return view('entreaties.pay',
-                    [
-            'entreaty' => $entreaty,
-            'attempts' => [ ]
-        ]);
-    });
     Route::delete('/entreaty/{entreaty}',
                   'EntreatyController@destroy');
+
+    Route::get('/pay/entreaty/{entreaty}',
+               'AttemptController@initiate');
+    Route::get('/paystack-callback',
+               'AttemptController@verify');
 
     Route::auth();
 });

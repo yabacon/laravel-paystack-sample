@@ -28,4 +28,12 @@ class Entreaty extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    /**
+     * Get all of the attempts for the entreaty.
+     */
+    public function attempts()
+    {
+        return $this->hasMany(Attempt::class);
+    }
 }
