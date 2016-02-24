@@ -40,7 +40,7 @@
 
                 <!-- Branding Image -->
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    Entreaty List
+                    Payment Requests Sample
                 </a>
             </div>
 

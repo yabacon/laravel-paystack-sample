@@ -14,7 +14,7 @@
                    send payment requests to your customers so that they may pay you easily using their paystack keys.
 
                    <p>As this is not production-ready, you will note that anyone can register and request payments.
-                   <p>An updated version may include logic to allow enable or disable users's payment request rights
+                   An updated version may include logic to allow enable or disable users's payment request rights
                 </div>
             </div>
         </div>

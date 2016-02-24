@@ -55,8 +55,6 @@ class EntreatyController extends Controller
      */
     public function store(Request $request)
     {
-
-
         $this->validate($request,
                         [
             'recipient_name'      => 'required|max:255',
@@ -84,7 +82,7 @@ class EntreatyController extends Controller
             'payment_url'         => $this->url->to('/pay/entreaty/' . $entreaty->id)
             ],
                                                     function($message) use ($request) {
-            $message->from(env('MAIL_SENDER_EMAIL', 'help@paystack.co'), env('MAIL_SENDER_NAME', 'Sample App'));
+            $message->from($request->user()->email, $request->user()->name);
 
             $message->to($request->recipient_email,
                          $request->recipient_name)->subject(env('MAIL_SUBJECT', 'Payment request'));
