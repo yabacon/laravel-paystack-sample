@@ -154,7 +154,7 @@
 								<tr>
 									<td valign="middle" width="270" style="padding: 10px 0 10px 20px;" class="logo">
 										<div class="imgpop">
-											<a href="#"><img src="http://q3.ps.eidetic.ng/paystack.png" alt="logo" border="0" style="display:block; border:none; outline:none; text-decoration:none;" st-image="edit" class="logo"></a>
+											<a href="{{ url('/') }}"><img src="{{ url('/paystack.png') }}" alt="logo" border="0" style="display:block; border:none; outline:none; text-decoration:none;" st-image="edit" class="logo"></a>
 										</div>
 									</td>
 								</tr>

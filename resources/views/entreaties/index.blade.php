@@ -6,18 +6,18 @@
     <div class="{{ ((count($entreaties) > 0) ? 'col-sm-5':'col-sm-offset-2 col-sm-8') }}">
       <div class="panel panel-default">
         <div class="panel-heading">
-          Create New Entreaty
+          Create New Payment Request
         </div>
 
         <div class="panel-body">
           <!-- Display Validation Errors -->
           @include('common.errors')
 
-          <!-- New Entreaty Form -->
-          <form action="/entreaty" method="POST" class="form-horizontal">
+          <!-- New Payment Request Form -->
+          <form action="{{ url('/entreaty') }}" method="POST" class="form-horizontal">
             {{ csrf_field() }}
 
-            <!-- Entreaty Recipient Name -->
+            <!-- Payment Request Recipient Name -->
             <div class="form-group">
               <label for="entreaty-recipient_name" class="col-sm-5 control-label">Recipient Name</label>
 
@@ -26,7 +26,7 @@
               </div>
             </div>
 
-            <!-- Entreaty Recipient Email -->
+            <!-- Payment Request Recipient Email -->
             <div class="form-group">
               <label for="entreaty-recipient_email" class="col-sm-5 control-label">Recipient Email</label>
 
@@ -35,7 +35,7 @@
               </div>
             </div>
 
-            <!-- Entreaty Invoice Title -->
+            <!-- Payment Request Invoice Title -->
             <div class="form-group">
               <label for="entreaty-invoice_title" class="col-sm-5 control-label">Invoice Title</label>
 
@@ -44,7 +44,7 @@
               </div>
             </div>
 
-            <!-- Entreaty Invoice Description -->
+            <!-- Payment Request Invoice Description -->
             <div class="form-group">
               <label for="entreaty-invoice_description" class="col-sm-5 control-label">Invoice Description</label>
 
@@ -53,7 +53,7 @@
               </div>
             </div>
 
-            <!-- Entreaty amount -->
+            <!-- Payment Request amount -->
             <div class="form-group">
               <label for="entreaty-amount" class="col-sm-5 control-label">Amount</label>
 
@@ -62,11 +62,11 @@
               </div>
             </div>
 
-            <!-- Add Entreaty Button -->
+            <!-- Add Payment Request Button -->
             <div class="form-group">
               <div class="col-sm-offset-3 col-sm-6">
                 <button type="submit" class="btn btn-primary">
-                  <i class="fa fa-btn fa-paper-plane"></i>Send Entreaty
+                  <i class="fa fa-btn fa-paper-plane"></i>Send Payment Request
                 </button>
               </div>
             </div>
@@ -74,17 +74,17 @@
         </div>
       </div>
     </div>
-    <div class="col-sm-7">  <!-- Current Entreaties -->
+    <div class="col-sm-7">  <!-- Current Payment Requests -->
       @if (count($entreaties) > 0)
       <div class="panel panel-default">
         <div class="panel-heading">
-          Current Entreaties
+          Current Payment Requests
         </div>
 
         <div class="panel-body">
           <table class="table table-striped entreaty-table table-condensed table-hover">
             <thead>
-            <th>Entreaty</th>
+            <th>Payment Request</th>
             <th>Paid</th>
             <th>&nbsp;</th>
             </thead>
@@ -94,13 +94,14 @@
                 <td class="table-text"><div>{{ $entreaty->recipient_name }}</div></td>
                 <td class="table-text"><div>{{ ($entreaty->invoice_paid ? 'Yes' : 'No') }}</div></td>
 
-                <!-- Entreaty Delete Button -->
+                <!-- Payment Request Delete Button -->
                 <td>
-                  <a href="/entreaty/{{ $entreaty->id }}"><button type="submit" id="view-entreaty-{{ $entreaty->id }}" class="btn btn-info">
+                  <a href="{{ url('/entreaty/'.$entreaty->id) }}"><button type="submit" id="view-entreaty-{{ $entreaty->id }}" class="btn btn-info">
                       <i class="fa fa-btn fa-eye"></i>View
                     </button></a>
 
-                  <form class="{{ (($entreaty->invoice_paid || true)? 'hidden':'') }}" style="display:inline-block" action="/entreaty/{{ $entreaty->id }}" method="POST">
+                  <form class="{{ (($entreaty->invoice_paid || true)? 'hidden':'') }}" style="display:inline-block"
+                        action="{{ url('/entreaty/'.$entreaty->id) }}" method="POST">
                     {{ csrf_field() }}
                     {{ method_field('DELETE') }}
 

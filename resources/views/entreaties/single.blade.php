@@ -6,15 +6,15 @@
     <div class="{{ ((count($attempts) > 0) ? 'col-sm-5':'col-sm-offset-2 col-sm-8') }}">
       <div class="panel panel-default">
         <div class="panel-heading">
-          Entreaty created at {{ $entreaty->created_at->format('H:ia \o\n M jS, Y') }}
+          Payment Request created at {{ $entreaty->created_at->format('H:ia \o\n M jS, Y') }}
         </div>
 
         <div class="panel-body">
 
-          <!-- New Entreaty Form -->
+          <!-- New Payment Request Form -->
           <div class="row">
 
-            <!-- Entreaty Recipient Name -->
+            <!-- Payment Request Recipient Name -->
             <div class="col-sm-offset-1 col-sm-10">
               <label for="entreaty-recipient_name" class="col-sm-5 control-label">Recipient Name</label>
 
@@ -23,7 +23,7 @@
               </div>
             </div>
 
-            <!-- Entreaty Recipient Email -->
+            <!-- Payment Request Recipient Email -->
             <div class="col-sm-offset-1 col-sm-10">
               <label for="entreaty-recipient_email" class="col-sm-5 control-label">Recipient Email</label>
 
@@ -32,7 +32,7 @@
               </div>
             </div>
 
-            <!-- Entreaty Invoice Title -->
+            <!-- Payment Request Invoice Title -->
             <div class="col-sm-offset-1 col-sm-10">
               <label for="entreaty-invoice_title" class="col-sm-5 control-label">Invoice Title</label>
 
@@ -41,7 +41,7 @@
               </div>
             </div>
 
-            <!-- Entreaty Invoice Description -->
+            <!-- Payment Request Invoice Description -->
             <div class="col-sm-offset-1 col-sm-10">
               <label for="entreaty-invoice_description" class="col-sm-5 control-label">Invoice Description</label>
 
@@ -50,7 +50,7 @@
               </div>
             </div>
 
-            <!-- Entreaty amount -->
+            <!-- Payment Request amount -->
             <div class="col-sm-offset-1 col-sm-10">
               <label for="entreaty-amount" class="col-sm-5 control-label">Amount</label>
 
@@ -62,7 +62,7 @@
             <!-- Back to list Button -->
             <div class="form-group">
               <div class="col-sm-offset-3 col-sm-6">
-                <a href="/entreaties"><button type="" class="btn btn-primary">
+                <a href="{{ url('/entreaties') }}"><button type="" class="btn btn-primary">
                   <i class="fa fa-btn fa-arrow-circle-o-left"></i>Back to List
                   </button></a>
               </div>

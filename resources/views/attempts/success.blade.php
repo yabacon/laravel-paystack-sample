@@ -1,1 +1,1 @@
-Your payment has been received successfully
+Your payment has been received successfully.

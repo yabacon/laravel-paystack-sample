@@ -84,13 +84,13 @@ class EntreatyController extends Controller
             'payment_url'         => $this->url->to('/pay/entreaty/' . $entreaty->id)
             ],
                                                     function($message) use ($request) {
-            $message->from('q3@ps.eidetic.ng', 'Sample Laravel App');
+            $message->from(env('MAIL_SENDER_EMAIL', 'help@paystack.co'), env('MAIL_SENDER_NAME', 'Sample App'));
 
             $message->to($request->recipient_email,
-                         $request->recipient_name)->subject('An entreaty to pay!');
+                         $request->recipient_name)->subject(env('MAIL_SUBJECT', 'Payment request'));
         });
 
-        return redirect('/entreaties');
+        return redirect($this->url->to('/entreaties'));
     }
 
     /**
@@ -124,6 +124,6 @@ class EntreatyController extends Controller
 
         $entreaty->delete();
 
-        return redirect('/entreaties');
+        return redirect($this->url->to('/entreaties'));
     }
 }

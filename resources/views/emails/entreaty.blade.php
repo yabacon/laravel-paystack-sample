@@ -2,9 +2,11 @@
 
 @section('content')
 
-Thanks for your Business, {{ $recipient_name }}. You need to pay us &#x20a6;{{ $amount }} for {{ $invoice_title }}.
-<p>Details:<br> {!! nl2br(e($invoice_description)) !!}</p>
-Do pay us using paystack now.
+Hello {{ $recipient_name }},
 
-<a href="{{ $payment_url }}">{{ $payment_url }}</a>
+You are to pay &#x20a6;{{ $amount }} for {{ $invoice_title }}.
+<p>Details:<br> {!! nl2br(e($invoice_description)) !!}</p>
+Click the link below to pay using paystack:
+
+<p><a href="{{ $payment_url }}">{{ $payment_url }}</a>
 @endsection
