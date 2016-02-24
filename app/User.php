@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Task;
+use App\Entreaty;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
@@ -31,5 +32,13 @@ class User extends Authenticatable
     public function tasks()
     {
         return $this->hasMany(Task::class);
+    }
+
+    /**
+     * Get all of the entreaties for the user.
+     */
+    public function entreaties()
+    {
+        return $this->hasMany(Entreaty::class);
     }
 }
