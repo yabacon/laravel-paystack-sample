@@ -8,6 +8,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Entreaty;
 use App\Repositories\EntreatyRepository;
+use Illuminate\Auth\Access\AuthorizationException;
 
 class EntreatyController extends Controller
 {
@@ -76,19 +77,46 @@ class EntreatyController extends Controller
         // Send email to recipient
         Mail::send('emails.entreaty',
                    [
-                       'recipient_name' => $request->recipient_name,
-                       'amount' => $request->amount,
-                       'invoice_title' => $request->invoice_title,
-                       'invoice_description' => $request->invoice_description
+            'recipient_name'      => $request->recipient_name,
+            'amount'              => $request->amount,
+            'invoice_title'       => $request->invoice_title,
+            'invoice_description' => $request->invoice_description
             ],
                    function($message) use ($request) {
-            $message->from('q3@ps.eidetic.ng', 'Sample Laravel App');
+            $message->from('q3@ps.eidetic.ng',
+                           'Sample Laravel App');
 
             $message->to($request->recipient_email,
                          $request->recipient_name)->cc('ibrahim.lawal@eidetic.ng')->subject('An entreaty to pay!');
         });
 
         return redirect('/entreaties');
+    }
+
+    /**
+     * Destroy the given entreaty.
+     *
+     * @param  Request  $request
+     * @param  Entreaty  $entreaty
+     * @return Response
+     */
+    public function view(Request $request, Entreaty $entreaty)
+    {
+        try {
+            $this->authorize('view',
+                             $entreaty);
+        } catch (AuthorizationException $ae) {
+            return view('entreaties.pay',
+                        [
+                'entreaty' => $entreaty,
+                'attempts' => [ ]
+            ]);
+        }
+        return view('entreaties.single',
+                    [
+            'entreaty' => $entreaty,
+            'attempts' => [ ]
+        ]);
     }
 
     /**
