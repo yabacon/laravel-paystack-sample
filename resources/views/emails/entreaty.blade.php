@@ -1,16 +1,9 @@
 @extends('layouts.email')
 
 @section('content')
-    <div class="container">
-        <div class="col-sm-offset-2 col-sm-8">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    Thanks for your Business, {{ $recipient_name }}. Do pay us using paystack now.
-                </div>
 
+Thanks for your Business, {{ $recipient_name }}. You need to pay us &#x20a6;{{ $amount }} for {{ $invoice_title }}.
+<p>Details: {{{ nl2br(e($invoice_description)) }}}</p>
+Do pay us using paystack now.
 
-            </div>
-
-        </div>
-    </div>
 @endsection

@@ -75,7 +75,12 @@ class EntreatyController extends Controller
 
         // Send email to recipient
         Mail::send('emails.entreaty',
-                   ['recipient_name' => '$request->recipient_name' ],
+                   [
+                       'recipient_name' => $request->recipient_name,
+                       'amount' => $request->amount,
+                       'invoice_title' => $request->invoice_title,
+                       'invoice_description' => $request->invoice_description
+            ],
                    function($message) use ($request) {
             $message->from('q3@ps.eidetic.ng', 'Sample Laravel App');
 
